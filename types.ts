@@ -118,6 +118,6 @@ export interface ContactFormData {
 export type Theme = 'light' | 'dark';
 
 // Utility types
-export type OptionalMetadata<T> = Partial<T['metadata']>;
+export type OptionalMetadata<T extends CosmicObject> = Partial<T['metadata']>;
 export type CreateProjectData = Omit<Project, 'id' | 'created_at' | 'modified_at'>;
 export type CreateBlogPostData = Omit<BlogPost, 'id' | 'created_at' | 'modified_at'>;
