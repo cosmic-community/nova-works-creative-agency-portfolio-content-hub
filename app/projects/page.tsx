@@ -1,4 +1,4 @@
-import { ProjectCard } from '@/components/ProjectCard'
+import ProjectCard from '@/components/ProjectCard'
 import { getProjects } from '@/lib/cosmic'
 import { Project } from '@/types'
 

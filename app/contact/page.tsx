@@ -1,4 +1,4 @@
-import { ContactForm } from '@/components/ContactForm'
+import ContactForm from '@/components/ContactForm'
 import { Mail, Phone, MapPin } from 'lucide-react'
 
 export const metadata = {

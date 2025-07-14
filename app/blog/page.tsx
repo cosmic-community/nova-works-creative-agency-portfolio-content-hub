@@ -1,4 +1,4 @@
-import { PostCard } from '@/components/PostCard'
+import PostCard from '@/components/PostCard'
 import { getBlogPosts } from '@/lib/cosmic'
 import { BlogPost } from '@/types'
 

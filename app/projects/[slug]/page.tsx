@@ -2,7 +2,7 @@
 import { notFound } from 'next/navigation'
 import { getProject } from '@/lib/cosmic'
 import { formatDate, getImageUrl } from '@/lib/utils'
-import { Badge } from '@/components/Badge'
+import Badge from '@/components/Badge'
 import { ExternalLink, Calendar, User } from 'lucide-react'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
