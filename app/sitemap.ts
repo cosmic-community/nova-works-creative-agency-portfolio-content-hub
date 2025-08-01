@@ -1,63 +1,75 @@
 import { MetadataRoute } from 'next'
-import { getBlogPosts, getProjects } from '@/lib/cosmic'
+import { createBucketClient } from '@cosmicjs/sdk'
 
-function isValidDate(dateString: string): boolean {
-  if (!dateString) return false
-  const date = new Date(dateString)
-  return date instanceof Date && !isNaN(date.getTime())
-}
-
-function getValidDate(dateString: string | undefined): Date {
-  if (!dateString || !isValidDate(dateString)) {
-    return new Date() // Fallback to current date
-  }
-  return new Date(dateString)
-}
+const cosmic = createBucketClient({
+  bucketSlug: process.env.COSMIC_BUCKET_SLUG as string,
+  readKey: process.env.COSMIC_READ_KEY as string,
+})
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://novaworks.com'
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://novaworks.com'
   
   // Static pages
   const staticPages = [
-    '',
-    '/projects',
-    '/blog', 
-    '/team',
-    '/contact'
-  ].map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date(),
-    changeFrequency: route === '' ? 'weekly' as const : 'monthly' as const,
-    priority: route === '' ? 1 : 0.8
-  }))
-
-  // Dynamic blog posts
-  let blogPages: any[] = []
-  try {
-    const posts = await getBlogPosts()
-    blogPages = posts.map((post) => ({
-      url: `${baseUrl}/blog/${post.slug}`,
-      lastModified: getValidDate(post.modified_at),
+    {
+      url: baseUrl,
+      lastModified: new Date(),
       changeFrequency: 'weekly' as const,
-      priority: 0.7
-    }))
-  } catch (error) {
-    console.error('Error fetching blog posts for sitemap:', error)
-  }
-
-  // Dynamic project pages
-  let projectPages: any[] = []
-  try {
-    const projects = await getProjects()
-    projectPages = projects.map((project) => ({
-      url: `${baseUrl}/projects/${project.slug}`,
-      lastModified: getValidDate(project.modified_at),
+      priority: 1,
+    },
+    {
+      url: `${baseUrl}/projects`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/team`,
+      lastModified: new Date(),
       changeFrequency: 'monthly' as const,
-      priority: 0.7
-    }))
-  } catch (error) {
-    console.error('Error fetching projects for sitemap:', error)
-  }
+      priority: 0.6,
+    },
+    {
+      url: `${baseUrl}/contact`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.5,
+    },
+  ]
 
-  return [...staticPages, ...blogPages, ...projectPages]
+  try {
+    // Get dynamic pages from Cosmic CMS
+    const [projectsResponse, blogPostsResponse] = await Promise.all([
+      cosmic.objects.find({ type: 'projects' }).props(['slug', 'modified_at']),
+      cosmic.objects.find({ type: 'blog-posts' }).props(['slug', 'modified_at']),
+    ])
+
+    // Project pages
+    const projectPages = projectsResponse.objects.map((project) => ({
+      url: `${baseUrl}/projects/${project.slug}`,
+      lastModified: new Date(project.modified_at || new Date()),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    }))
+
+    // Blog post pages
+    const blogPages = blogPostsResponse.objects.map((post) => ({
+      url: `${baseUrl}/blog/${post.slug}`,
+      lastModified: new Date(post.modified_at || new Date()),
+      changeFrequency: 'weekly' as const,
+      priority: 0.6,
+    }))
+
+    return [...staticPages, ...projectPages, ...blogPages]
+  } catch (error) {
+    console.error('Error generating sitemap:', error)
+    // Return static pages only if CMS fails
+    return staticPages
+  }
 }

@@ -18,7 +18,7 @@ const nextConfig = {
   compress: true,
   // Enable PWA features
   poweredByHeader: false,
-  // Security headers
+  // Security headers (removed noindex to allow search engine crawling)
   async headers() {
     return [
       {
