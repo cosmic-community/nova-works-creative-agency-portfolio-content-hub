@@ -1,5 +1,18 @@
 import { MetadataRoute } from 'next'
-import { getBlogPosts, getProjects, getTeamMembers } from '@/lib/cosmic'
+import { getBlogPosts, getProjects } from '@/lib/cosmic'
+
+function isValidDate(dateString: string): boolean {
+  if (!dateString) return false
+  const date = new Date(dateString)
+  return date instanceof Date && !isNaN(date.getTime())
+}
+
+function getValidDate(dateString: string | undefined): Date {
+  if (!dateString || !isValidDate(dateString)) {
+    return new Date() // Fallback to current date
+  }
+  return new Date(dateString)
+}
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://novaworks.com'
@@ -24,7 +37,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const posts = await getBlogPosts()
     blogPages = posts.map((post) => ({
       url: `${baseUrl}/blog/${post.slug}`,
-      lastModified: new Date(post.modified_at),
+      lastModified: getValidDate(post.modified_at),
       changeFrequency: 'weekly' as const,
       priority: 0.7
     }))
@@ -38,7 +51,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const projects = await getProjects()
     projectPages = projects.map((project) => ({
       url: `${baseUrl}/projects/${project.slug}`,
-      lastModified: new Date(project.modified_at),
+      lastModified: getValidDate(project.modified_at),
       changeFrequency: 'monthly' as const,
       priority: 0.7
     }))
