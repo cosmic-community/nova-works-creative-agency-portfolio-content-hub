@@ -114,7 +114,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               className="w-full h-auto rounded-lg shadow-lg"
               width={1200}
               height={600}
-              priority
             />
           </figure>
 
