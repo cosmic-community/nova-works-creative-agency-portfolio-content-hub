@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        border: '#BCA88D',
+        border: '#D4BEAB',
         ring: '#3E3F29',
         background: '#F1F0E4',
         foreground: '#3E3F29',
@@ -37,6 +37,11 @@ module.exports = {
           darker: '#E8E6DA',
           dark: '#DFDCD0',
         },
+        // Updated bold color scheme
+        forest: '#3E3F29',
+        sage: '#7D8D86',
+        warm: '#BCA88D',
+        cream: '#F1F0E4',
       },
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],

@@ -5,14 +5,14 @@
 :root {
   --font-inter: 'Inter', sans-serif;
   
-  /* Color palette */
-  --color-primary: 45 85 51;
-  --color-secondary: 120 150 90;
-  --color-accent: 180 120 80;
-  --color-forest: 45 85 51;
-  --color-sage: 120 150 90;
-  --color-warm: 180 120 80;
-  --color-cream: 248 246 240;
+  /* Updated color palette with bold colors */
+  --color-primary: 62 63 41; /* #3E3F29 */
+  --color-secondary: 125 141 134; /* #7D8D86 */
+  --color-accent: 188 168 141; /* #BCA88D */
+  --color-forest: 62 63 41; /* #3E3F29 */
+  --color-sage: 125 141 134; /* #7D8D86 */
+  --color-warm: 188 168 141; /* #BCA88D */
+  --color-cream: 241 240 228; /* #F1F0E4 */
   
   /* Semantic colors */
   --color-light: 255 255 255;
