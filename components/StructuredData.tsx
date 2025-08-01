@@ -1,125 +1,142 @@
-import Script from 'next/script'
+'use client'
+
+import { useEffect } from 'react'
+
+interface OrganizationSchema {
+  '@context': string
+  '@type': string
+  name: string
+  description: string
+  url: string
+  logo: string
+  sameAs: string[]
+  contactPoint: {
+    '@type': string
+    telephone: string
+    contactType: string
+    areaServed: string
+    availableLanguage: string
+  }
+  address: {
+    '@type': string
+    addressCountry: string
+    addressRegion: string
+  }
+  foundingDate: string
+  founder: {
+    '@type': string
+    name: string
+  }
+  numberOfEmployees: string
+  knowsAbout: string[]
+  serviceArea: {
+    '@type': string
+    name: string
+  }
+}
+
+interface WebsiteSchema {
+  '@context': string
+  '@type': string
+  name: string
+  url: string
+  description: string
+  publisher: {
+    '@type': string
+    name: string
+  }
+  potentialAction: {
+    '@type': string
+    target: string
+    'query-input': string
+  }
+}
 
 export default function StructuredData() {
-  const organizationSchema = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Nova Works",
-    "alternateName": "Nova Works Creative Agency",
-    "url": "https://novaworks.com",
-    "logo": "https://novaworks.com/logo.png",
-    "description": "Premier creative digital agency specializing in brand identity, web design, and full-stack development services.",
-    "foundingDate": "2020",
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "telephone": "+1-555-123-4567",
-      "contactType": "Customer Service",
-      "email": "hello@novaworks.com",
-      "availableLanguage": "English"
-    },
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "123 Creative Street",
-      "addressLocality": "San Francisco",
-      "addressRegion": "CA",
-      "postalCode": "94102",
-      "addressCountry": "US"
-    },
-    "sameAs": [
-      "https://twitter.com/novaworks",
-      "https://linkedin.com/company/novaworks",
-      "https://instagram.com/novaworks",
-      "https://facebook.com/novaworks"
-    ],
-    "serviceArea": {
-      "@type": "Place",
-      "name": "Worldwide"
-    },
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Digital Services",
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Web Design",
-            "description": "Custom web design solutions"
-          }
-        },
-        {
-          "@type": "Offer", 
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Web Development",
-            "description": "Full-stack web development services"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service", 
-            "name": "Brand Identity",
-            "description": "Complete brand identity design and strategy"
-          }
-        }
-      ]
-    }
-  }
+  useEffect(() => {
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://novaworks.com'
 
-  const websiteSchema = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Nova Works",
-    "url": "https://novaworks.com",
-    "description": "Creative digital agency portfolio and blog",
-    "publisher": {
-      "@type": "Organization",
-      "name": "Nova Works"
-    },
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://novaworks.com/search?q={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
-  }
-
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://novaworks.com"
+    // Organization Schema
+    const organizationSchema: OrganizationSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: 'NovaWorks',
+      description: 'Creative agency specializing in web design, development, branding, and digital solutions',
+      url: baseUrl,
+      logo: `${baseUrl}/logo.png`,
+      sameAs: [
+        'https://twitter.com/novaworks',
+        'https://linkedin.com/company/novaworks',
+        'https://instagram.com/novaworks'
+      ],
+      contactPoint: {
+        '@type': 'ContactPoint',
+        telephone: '+1-555-0123',
+        contactType: 'customer service',
+        areaServed: 'US',
+        availableLanguage: 'English'
+      },
+      address: {
+        '@type': 'PostalAddress',
+        addressCountry: 'US',
+        addressRegion: 'CA'
+      },
+      foundingDate: '2020-01-01',
+      founder: {
+        '@type': 'Person',
+        name: 'NovaWorks Team'
+      },
+      numberOfEmployees: '10-50',
+      knowsAbout: [
+        'Web Design',
+        'Web Development',
+        'Branding',
+        'UI/UX Design',
+        'Digital Marketing',
+        'E-commerce Development',
+        'Mobile App Development'
+      ],
+      serviceArea: {
+        '@type': 'Place',
+        name: 'Worldwide'
       }
-    ]
-  }
+    }
 
-  return (
-    <>
-      <Script
-        id="organization-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(organizationSchema)
-        }}
-      />
-      <Script
-        id="website-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(websiteSchema)
-        }}
-      />
-      <Script
-        id="breadcrumb-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbSchema)
-        }}
-      />
-    </>
-  )
+    // Website Schema
+    const websiteSchema: WebsiteSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'NovaWorks',
+      url: baseUrl,
+      description: 'Creative agency specializing in web design, development, branding, and digital solutions',
+      publisher: {
+        '@type': 'Organization',
+        name: 'NovaWorks'
+      },
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: `${baseUrl}/search?q={search_term_string}`,
+        'query-input': 'required name=search_term_string'
+      }
+    }
+
+    // Add schemas to head
+    const organizationScript = document.createElement('script')
+    organizationScript.type = 'application/ld+json'
+    organizationScript.textContent = JSON.stringify(organizationSchema)
+    document.head.appendChild(organizationScript)
+
+    const websiteScript = document.createElement('script')
+    websiteScript.type = 'application/ld+json'
+    websiteScript.textContent = JSON.stringify(websiteSchema)
+    document.head.appendChild(websiteScript)
+
+    // Cleanup function
+    return () => {
+      document.head.removeChild(organizationScript)
+      document.head.removeChild(websiteScript)
+    }
+  }, [])
+
+  return null
 }
