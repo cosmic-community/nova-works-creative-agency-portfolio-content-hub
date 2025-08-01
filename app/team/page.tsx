@@ -1,11 +1,24 @@
 import TeamCard from '@/components/TeamCard'
 import { getTeamMembers } from '@/lib/cosmic'
+import { generateSEO } from '@/lib/seo'
 import { TeamMember } from '@/types'
 
-export const metadata = {
-  title: 'Team - Nova Works',
-  description: 'Meet our talented team of designers, developers, and strategists who bring your creative vision to life.',
-}
+export const metadata = generateSEO({
+  title: 'Our Team - Meet the Creative Experts at Nova Works',
+  description: 'Meet our talented team of designers, developers, and strategists who bring creative visions to life with expertise in branding, web design, and development.',
+  keywords: [
+    'creative team',
+    'web designers',
+    'web developers',
+    'UI/UX designers',
+    'brand strategists',
+    'creative professionals',
+    'design team',
+    'development team',
+    'agency team'
+  ],
+  canonical: '/team'
+})
 
 export default async function TeamPage() {
   const teamMembers = await getTeamMembers()
@@ -25,7 +38,7 @@ export default async function TeamPage() {
 
   return (
     <div className="container section-padding">
-      <div className="text-center mb-16">
+      <header className="text-center mb-16">
         <h1 className="text-4xl lg:text-5xl font-bold mb-6">
           Meet Our <span className="text-gradient">Team</span>
         </h1>
@@ -33,13 +46,15 @@ export default async function TeamPage() {
           Our talented team of designers, developers, and strategists who bring your 
           creative vision to life.
         </p>
-      </div>
+      </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-        {teamMembers.map((member: TeamMember) => (
-          <TeamCard key={member.id} member={member} />
-        ))}
-      </div>
+      <section aria-label="Team members">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          {teamMembers.map((member: TeamMember) => (
+            <TeamCard key={member.id} member={member} />
+          ))}
+        </div>
+      </section>
     </div>
   )
 }

@@ -1,11 +1,24 @@
 import PostCard from '@/components/PostCard'
 import { getBlogPosts } from '@/lib/cosmic'
+import { generateSEO } from '@/lib/seo'
 import { BlogPost } from '@/types'
 
-export const metadata = {
-  title: 'Blog - Nova Works',
-  description: 'Latest insights, trends, and tips from our creative team on design, development, and strategy.',
-}
+export const metadata = generateSEO({
+  title: 'Blog - Insights & Trends from Nova Works',
+  description: 'Discover the latest insights, trends, and expert tips from our creative team on web design, development, branding, and digital strategy.',
+  keywords: [
+    'design blog',
+    'web development blog', 
+    'creative insights',
+    'design trends',
+    'development tips',
+    'digital strategy',
+    'UI/UX insights',
+    'brand identity',
+    'creative agency blog'
+  ],
+  canonical: '/blog'
+})
 
 export default async function BlogPage() {
   const posts = await getBlogPosts()
@@ -25,7 +38,7 @@ export default async function BlogPage() {
 
   return (
     <div className="container section-padding">
-      <div className="text-center mb-16">
+      <header className="text-center mb-16">
         <h1 className="text-4xl lg:text-5xl font-bold mb-6">
           Our <span className="text-gradient">Blog</span>
         </h1>
@@ -33,13 +46,15 @@ export default async function BlogPage() {
           Latest insights, trends, and tips from our creative team on design, development, 
           and strategy.
         </p>
-      </div>
+      </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {posts.map((post: BlogPost) => (
-          <PostCard key={post.id} post={post} />
-        ))}
-      </div>
+      <section aria-label="Blog posts">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {posts.map((post: BlogPost) => (
+            <PostCard key={post.id} post={post} />
+          ))}
+        </div>
+      </section>
     </div>
   )
 }
