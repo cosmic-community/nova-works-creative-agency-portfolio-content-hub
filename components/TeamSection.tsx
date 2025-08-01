@@ -7,13 +7,13 @@ export default async function TeamSection() {
   const teamMembers = await getTeamMembers();
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-20 bg-cream">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-forest mb-4">
             Meet Our Team
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-sage max-w-2xl mx-auto">
             Our diverse team of creatives, strategists, and developers work together 
             to bring your vision to life.
           </p>
@@ -28,7 +28,7 @@ export default async function TeamSection() {
         <div className="text-center">
           <Link
             href="/team"
-            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-forest hover:bg-sage transition-colors"
           >
             Meet the Full Team
             <svg className="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
