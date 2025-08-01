@@ -1,6 +1,11 @@
 import { MetadataRoute } from 'next'
 import { createBucketClient } from '@cosmicjs/sdk'
 
+interface CosmicObject {
+  slug: string
+  modified_at?: string
+}
+
 const cosmic = createBucketClient({
   bucketSlug: process.env.COSMIC_BUCKET_SLUG as string,
   readKey: process.env.COSMIC_READ_KEY as string,
@@ -51,7 +56,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ])
 
     // Project pages
-    const projectPages = projectsResponse.objects.map((project) => ({
+    const projectPages = projectsResponse.objects.map((project: CosmicObject) => ({
       url: `${baseUrl}/projects/${project.slug}`,
       lastModified: new Date(project.modified_at || new Date()),
       changeFrequency: 'monthly' as const,
@@ -59,7 +64,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
 
     // Blog post pages
-    const blogPages = blogPostsResponse.objects.map((post) => ({
+    const blogPages = blogPostsResponse.objects.map((post: CosmicObject) => ({
       url: `${baseUrl}/blog/${post.slug}`,
       lastModified: new Date(post.modified_at || new Date()),
       changeFrequency: 'weekly' as const,
