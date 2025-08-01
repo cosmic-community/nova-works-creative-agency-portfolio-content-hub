@@ -8,34 +8,34 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        border: '#E2E8F0',
-        ring: '#8B5CF6',
-        background: '#FFFFFF',
-        foreground: '#0F172A',
+        border: '#BCA88D',
+        ring: '#3E3F29',
+        background: '#F1F0E4',
+        foreground: '#3E3F29',
         primary: {
-          DEFAULT: '#8B5CF6',
-          dark: '#7C3AED',
-          light: '#A78BFA',
+          DEFAULT: '#3E3F29',
+          dark: '#2D2E1C',
+          light: '#565840',
         },
         secondary: {
-          DEFAULT: '#10B981',
-          dark: '#059669',
-          light: '#34D399',
+          DEFAULT: '#7D8D86',
+          dark: '#6B7B74',
+          light: '#8F9F98',
         },
         accent: {
-          DEFAULT: '#F59E0B',
-          dark: '#D97706',
-          light: '#FCD34D',
+          DEFAULT: '#BCA88D',
+          dark: '#A4926F',
+          light: '#D4BEAB',
         },
         dark: {
-          DEFAULT: '#0F172A',
-          lighter: '#1E293B',
-          light: '#334155',
+          DEFAULT: '#3E3F29',
+          lighter: '#4A4C35',
+          light: '#565840',
         },
         light: {
-          DEFAULT: '#F8FAFC',
-          darker: '#E2E8F0',
-          dark: '#CBD5E1',
+          DEFAULT: '#F1F0E4',
+          darker: '#E8E6DA',
+          dark: '#DFDCD0',
         },
       },
       fontFamily: {

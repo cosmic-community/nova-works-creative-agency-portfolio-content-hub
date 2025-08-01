@@ -8,7 +8,7 @@
   }
   
   body {
-    @apply bg-light dark:bg-dark text-slate-900 dark:text-slate-100;
+    @apply bg-light dark:bg-dark text-primary dark:text-light;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
   
@@ -39,19 +39,19 @@
   }
   
   .btn-ghost {
-    @apply btn hover:bg-slate-100 dark:hover:bg-slate-800 px-6 py-3;
+    @apply btn hover:bg-accent/20 dark:hover:bg-secondary/20 px-6 py-3;
   }
   
   .input {
-    @apply flex h-12 w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 dark:placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+    @apply flex h-12 w-full rounded-lg border border-accent/50 dark:border-secondary/50 bg-white dark:bg-dark-lighter px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-secondary dark:placeholder:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
   }
   
   .textarea {
-    @apply flex min-h-[120px] w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm ring-offset-background placeholder:text-slate-500 dark:placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+    @apply flex min-h-[120px] w-full rounded-lg border border-accent/50 dark:border-secondary/50 bg-white dark:bg-dark-lighter px-3 py-2 text-sm ring-offset-background placeholder:text-secondary dark:placeholder:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
   }
   
   .card {
-    @apply rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm;
+    @apply rounded-lg border border-accent/30 dark:border-secondary/30 bg-white dark:bg-dark-lighter shadow-sm;
   }
   
   .gradient-bg {
@@ -76,11 +76,11 @@
   .prose h4,
   .prose h5,
   .prose h6 {
-    @apply text-slate-900 dark:text-slate-100;
+    @apply text-primary dark:text-light;
   }
   
   .prose p {
-    @apply text-slate-600 dark:text-slate-400;
+    @apply text-secondary dark:text-accent;
   }
   
   .prose a {
@@ -113,12 +113,12 @@
   }
   
   .bg-grid {
-    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-image: radial-gradient(circle, rgba(188, 168, 141, 0.1) 1px, transparent 1px);
     background-size: 20px 20px;
   }
   
   .bg-grid-dark {
-    background-image: radial-gradient(circle, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+    background-image: radial-gradient(circle, rgba(125, 141, 134, 0.1) 1px, transparent 1px);
     background-size: 20px 20px;
   }
 }
