@@ -42,6 +42,8 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
   const author = post.metadata?.author as TeamMember
   const featuredImage = post.metadata?.featured_image?.imgix_url
+  const category = post.metadata?.category
+  const categoryValue = typeof category === 'string' ? category : category?.value
   
   return generateBlogPostSEO({
     title: post.metadata?.title || post.title,
@@ -52,7 +54,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     publishedAt: post.created_at,
     modifiedAt: post.modified_at,
     tags: post.metadata?.tags || [],
-    category: post.metadata?.category?.value || post.metadata?.category
+    category: categoryValue
   })
 }
 
@@ -66,6 +68,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   const author = post.metadata?.author as TeamMember
   const featuredImage = post.metadata?.featured_image
+  const category = post.metadata?.category
+  const categoryValue = typeof category === 'string' ? category : category?.value
   const publishDate = new Date(post.created_at || '').toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
@@ -99,7 +103,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       '@id': `${process.env.NEXT_PUBLIC_SITE_URL || 'https://novaworks.com'}/blog/${post.slug}`
     },
     keywords: post.metadata?.tags?.join(', '),
-    articleSection: post.metadata?.category?.value || post.metadata?.category,
+    articleSection: categoryValue,
     wordCount: post.metadata?.content?.split(' ').length || 0,
     timeRequired: `PT${post.metadata?.reading_time || 5}M`
   }
@@ -113,10 +117,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       <div className="max-w-4xl mx-auto px-4 py-16">
         <article>
           <header className="mb-8">
-            {post.metadata?.category && (
+            {category && (
               <div className="mb-4">
                 <span className="inline-block px-3 py-1 text-sm font-medium bg-blue-100 text-blue-800 rounded-full dark:bg-blue-900 dark:text-blue-200">
-                  {post.metadata.category.value || post.metadata.category}
+                  {categoryValue}
                 </span>
               </div>
             )}

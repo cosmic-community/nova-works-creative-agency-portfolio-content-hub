@@ -41,6 +41,8 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   }
 
   const featuredImage = project.metadata?.featured_image?.imgix_url
+  const category = project.metadata?.category
+  const categoryValue = typeof category === 'string' ? category : category?.value
   
   return generateProjectSEO({
     title: project.metadata?.name || project.title,
@@ -48,7 +50,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
     featuredImage: featuredImage ? `${featuredImage}?w=1200&h=630&fit=crop&auto=format,compress` : undefined,
     slug: project.slug,
     technologies: project.metadata?.technologies || [],
-    category: project.metadata?.category?.value || project.metadata?.category,
+    category: categoryValue,
     client: project.metadata?.client
   })
 }
@@ -63,6 +65,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   const featuredImage = project.metadata?.featured_image
   const gallery = project.metadata?.gallery || []
+  const category = project.metadata?.category
+  const categoryValue = typeof category === 'string' ? category : category?.value
   const completionDate = project.metadata?.completion_date 
     ? new Date(project.metadata.completion_date).toLocaleDateString('en-US', {
         year: 'numeric',
@@ -97,7 +101,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       '@id': `${process.env.NEXT_PUBLIC_SITE_URL || 'https://novaworks.com'}/projects/${project.slug}`
     },
     keywords: project.metadata?.technologies?.join(', '),
-    genre: project.metadata?.category?.value || project.metadata?.category,
+    genre: categoryValue,
     client: project.metadata?.client,
     url: project.metadata?.project_url
   }
@@ -111,10 +115,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       <div className="max-w-6xl mx-auto px-4 py-16">
         <article>
           <header className="mb-12">
-            {project.metadata?.category && (
+            {category && (
               <div className="mb-4">
                 <span className="inline-block px-3 py-1 text-sm font-medium bg-purple-100 text-purple-800 rounded-full dark:bg-purple-900 dark:text-purple-200">
-                  {project.metadata.category.value || project.metadata.category}
+                  {categoryValue}
                 </span>
               </div>
             )}
@@ -207,11 +211,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   </div>
                 )}
                 
-                {project.metadata?.category && (
+                {category && (
                   <div className="mb-4">
                     <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Category</dt>
                     <dd className="text-gray-900 dark:text-white">
-                      {project.metadata.category.value || project.metadata.category}
+                      {categoryValue}
                     </dd>
                   </div>
                 )}

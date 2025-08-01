@@ -12,6 +12,7 @@ interface SEOProps {
   author?: string
   section?: string
   tags?: string[]
+  canonical?: string
 }
 
 export function generateSEO({
@@ -25,10 +26,11 @@ export function generateSEO({
   modifiedTime,
   author,
   section,
-  tags = []
+  tags = [],
+  canonical
 }: SEOProps): Metadata {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://novaworks.com'
-  const fullUrl = url ? `${baseUrl}${url}` : baseUrl
+  const fullUrl = canonical || (url ? `${baseUrl}${url}` : baseUrl)
   const fullTitle = title ? `${title} | NovaWorks` : 'NovaWorks - Creative Agency & Digital Solutions'
   const defaultDescription = 'NovaWorks is a creative agency specializing in web design, development, branding, and digital solutions. We create exceptional digital experiences that drive results.'
   const metaDescription = description || defaultDescription
@@ -117,8 +119,10 @@ export function generateBlogPostSEO({
   publishedAt?: string
   modifiedAt?: string
   tags?: string[]
-  category?: string
+  category?: string | { key: string; value: string }
 }): Metadata {
+  const categoryValue = typeof category === 'string' ? category : category?.value
+  
   return generateSEO({
     title,
     description: excerpt,
@@ -129,7 +133,7 @@ export function generateBlogPostSEO({
     publishedTime: publishedAt,
     modifiedTime: modifiedAt,
     author,
-    section: category,
+    section: categoryValue,
     tags
   })
 }
@@ -148,10 +152,11 @@ export function generateProjectSEO({
   featuredImage?: string
   slug: string
   technologies?: string[]
-  category?: string
+  category?: string | { key: string; value: string }
   client?: string
 }): Metadata {
-  const keywords = [...technologies, category, 'project', 'case study', client].filter(Boolean) as string[]
+  const categoryValue = typeof category === 'string' ? category : category?.value
+  const keywords = [...technologies, categoryValue, 'project', 'case study', client].filter(Boolean) as string[]
   
   return generateSEO({
     title,
